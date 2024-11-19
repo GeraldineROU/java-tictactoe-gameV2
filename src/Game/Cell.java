@@ -11,7 +11,7 @@ public class Cell {
         return content;
     }
 
-    private void setContent(String content) {
+    public void setContent(String content) {
         this.content = content;
     }
 }

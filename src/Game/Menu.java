@@ -14,6 +14,10 @@ public class Menu {
         return scanner.nextInt();
     }
 
+    public void displayNewTurnBeginning(int turnNumber) {
+        System.out.println("Turn number: " + turnNumber);
+    }
+
     private void displayWrongInput() {
         System.out.println("Invalid input, please try again");
     }
@@ -52,4 +56,15 @@ public class Menu {
         }
         displaySeparationLine();
     }
+
+    public int[] askPlayerRowAndColumnNumber() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please choose a row to play (number between 0 and 2)");
+        int row = scanner.nextInt();
+        System.out.println("Please choose a column to play (number between 0 and 2)");
+        int column = scanner.nextInt();
+        int[] playerMove = {row, column};
+        return playerMove;
+    }
+
 }
