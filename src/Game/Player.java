@@ -6,4 +6,5 @@ public class Player {
     public String getCrossMark() {
         return crossMark;
     }
+
 }

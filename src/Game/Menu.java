@@ -18,8 +18,12 @@ public class Menu {
         System.out.println("Turn number: " + turnNumber);
     }
 
-    private void displayWrongInput() {
+    public void displayWrongInput() {
         System.out.println("Invalid input, please try again");
+    }
+
+    public void displayNotAnEmptyCell() {
+        System.out.println("This cell has already been played, please choose another one.");
     }
 
     public void startGame(Cell[][] board) {
@@ -41,7 +45,7 @@ public class Menu {
     }
 
     private void displayOneCell(Cell cell) {
-        String cellContent = cell.getContent();
+        String cellContent = cell.getRepresentation();
         System.out.print("|");
         System.out.print(cellContent);
     }
@@ -65,6 +69,10 @@ public class Menu {
         int column = scanner.nextInt();
         int[] playerMove = {row, column};
         return playerMove;
+    }
+
+    public void displayVictory() {
+        System.out.println("You win!!! Yayyy !!");
     }
 
 }
