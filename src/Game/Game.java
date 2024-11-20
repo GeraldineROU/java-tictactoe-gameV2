@@ -7,14 +7,12 @@ public class Game {
     private Player playerX;
     private Player playerO;
     private int size = 3;
-    private int turn;
 
     public Game() {
         menu = new Menu();
         playerX = new Player(Player.X_MARK);
         playerO = new Player(Player.O_MARK);
         board = new Cell[size][size];
-        turn = 1;
     }
 
     private void initializeEmptyBoard() {
@@ -26,7 +24,6 @@ public class Game {
     }
 
     private void playOneTurn(Player player, int[] playerMove) {
-//        menu.displayNewTurnBeginning(turn);
         int row = playerMove[0];
         int col = playerMove[1];
         markCell(row, col, player);
@@ -42,22 +39,13 @@ public class Game {
         board[row][col].setRepresentation(playerMark);
     }
 
-//    public void playSoloGame() {
-//        initializeEmptyBoard();
-//        //gère le déroulement de l'ensemble du jeu
-//        startNewGame();
-//        while (!isGameOver()) {
-//            playOneTurn(playerX);
-//        }
-//    }
-
-    public void play2PlayersGame() {
+    public void playGame() {
         initializeEmptyBoard();
         startNewGame();
         int turn = 1;
         Player player;
 
-        while (!isGameOver() && turn <= size*size) {
+        while (turn <= size*size) {
             int[] choice;
             if (turn%2 == 0) {
                 player = playerO;
@@ -76,55 +64,57 @@ public class Game {
                 menu.displayNotAnEmptyCell();
             } else {
                 playOneTurn(player, choice);
+                checkIfIsGameOver(player);
                 turn ++;
             }
         }
         if (turn > 9){
-            System.out.println("No winner !!!");
+            menu.displayNoWinner();
         }
     }
 
     private void startNewGame() {
-        //affiche start menu
         menu.welcomeMenu();
-        //récupère choix du joueur
         menu.startGame(board);
 
     }
 
-    private boolean checkWin() {
-        boolean isVictory = false;
-
+    private String checkWhoWins(Player player) {
+        String winner;
         for (int row = 0; row < size; row++) {
             if(!board[row][0].isEmpty() && board[row][0].hasTheSameRepresentation(board[row][1]) && board[row][1].hasTheSameRepresentation(board[row][2])) {
-                System.out.println("You've completed a row !!!");
-                isVictory = true;
+                menu.displayRowCompleted();
+                winner = player.getPlayerMark();
+                return winner;
             }
         }
         for (int col = 0; col < size; col++) {
             if(!board[0][col].isEmpty() && board[0][col].hasTheSameRepresentation(board[1][col]) && board[1][col].hasTheSameRepresentation(board[2][col])) {
-                System.out.println("You've completed a column !!!");
-                isVictory = true;
+                menu.displayColumnCompleted();
+                winner = player.getPlayerMark();
+                return winner;
             }
         }
         if(!board[0][0].isEmpty() && board[0][0].hasTheSameRepresentation(board[1][1]) && board[1][1].hasTheSameRepresentation(board[2][2])) {
-            System.out.println("You've completed a diagonal !!!");
-            isVictory = true;
+            menu.displayDiagonalCompleted();
+            winner = player.getPlayerMark();
+            return winner;
         }
         if (!board[2][0].isEmpty() && board[2][0].hasTheSameRepresentation(board[1][1]) && board[1][1].hasTheSameRepresentation(board[0][2])) {
-            System.out.println("You've completed a diagonal !!!");
-            isVictory = true;
+            menu.displayDiagonalCompleted();
+            winner = player.getPlayerMark();
+            return winner;
         }
-        return isVictory;
+        winner = null;
+        return winner;
     }
 
 
-    private boolean isGameOver() {
-        if (checkWin()) {
-            menu.displayVictory();
-            return true;
-        }else {
-            return false;
+    private void checkIfIsGameOver(Player player) {
+        String winner = checkWhoWins(player);
+        if (winner != null) {
+            menu.displayVictory(winner);
+            System.exit(0);
         }
     }
 
