@@ -25,23 +25,12 @@ public class Game {
         }
     }
 
-    private void playOneTurn(Player player) {
+    private void playOneTurn(Player player, int[] playerMove) {
 //        menu.displayNewTurnBeginning(turn);
-        int[] playerMove = menu.askPlayerRowAndColumnNumber();
         int row = playerMove[0];
         int col = playerMove[1];
-        if (!isInBoardBounds(row) || !isInBoardBounds(col)) {
-            menu.displayWrongInput();
-            playOneTurn(player);
-        } else {
-            if(board[row][col].isEmpty()) {
-                markCell(row, col, player);
-                menu.displayGameBoard(board);
-            } else {
-                menu.displayNotAnEmptyCell();
-                playOneTurn(player);
-            }
-        }
+        markCell(row, col, player);
+        menu.displayGameBoard(board);
     }
 
     public boolean isInBoardBounds(int position) {
@@ -53,34 +42,51 @@ public class Game {
         board[row][col].setRepresentation(playerMark);
     }
 
-    public void playSoloGame() {
-        initializeEmptyBoard();
-        //gère le déroulement de l'ensemble du jeu
-        startNewGame();
-        while (!isGameOver()) {
-            playOneTurn(playerX);
-        }
-    }
+//    public void playSoloGame() {
+//        initializeEmptyBoard();
+//        //gère le déroulement de l'ensemble du jeu
+//        startNewGame();
+//        while (!isGameOver()) {
+//            playOneTurn(playerX);
+//        }
+//    }
 
     public void play2PlayersGame() {
         initializeEmptyBoard();
         startNewGame();
         int turn = 1;
         Player player;
-        while (!isGameOver()) {
+
+        while (!isGameOver() && turn <= size*size) {
+            int[] choice;
             if (turn%2 == 0) {
                 player = playerO;
+                choice = menu.getPlayer2Menu().askPlayerRowAndColumnNumber();
             } else {
                 player = playerX;
+                choice = menu.getPlayer1Menu().askPlayerRowAndColumnNumber();
             }
-            playOneTurn(player);
-            turn ++;
+
+            int row = choice[0];
+            int col = choice[1];
+
+            if (!isInBoardBounds(row) || !isInBoardBounds(col)) {
+                menu.displayWrongInput();
+            } if (!board[row][col].isEmpty()) {
+                menu.displayNotAnEmptyCell();
+            } else {
+                playOneTurn(player, choice);
+                turn ++;
+            }
+        }
+        if (turn > 9){
+            System.out.println("No winner !!!");
         }
     }
 
     private void startNewGame() {
         //affiche start menu
-        menu.startMenu();
+        menu.welcomeMenu();
         //récupère choix du joueur
         menu.startGame(board);
 

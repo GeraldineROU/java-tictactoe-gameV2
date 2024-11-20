@@ -4,13 +4,19 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public void startMenu() {
+    private PlayerInteraction player1Interaction;
+    private PlayerInteraction player2Interaction;
+
+    public void welcomeMenu() {
+
         System.out.println("Welcome to TIC TAC TOE !");
     }
 
     private int askPlayerToStartGame() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please type 1 to start a new game");
+        System.out.println("Please choose a game mode :");
+        System.out.println("-----> type 1 to start a new game against a human player");
+        System.out.println("-----> type 2 to start a new game against an artificial player");
         return scanner.nextInt();
     }
 
@@ -32,8 +38,14 @@ public class Menu {
         if (playerInput == 1) {
             //fction affichage
             System.out.println("New Board created !");
+            player1Interaction = new HumanPlayerInteraction();
+            player2Interaction = new HumanPlayerInteraction();
             displayGameBoard(board);
             System.out.println("What is your first move?");
+        } else if (playerInput == 2) {
+            player1Interaction = new HumanPlayerInteraction();
+            player2Interaction = new ArtificialPlayerInteraction();
+            displayGameBoard(board);
         } else {
             displayWrongInput();
             startGame(board);
@@ -61,18 +73,15 @@ public class Menu {
         displaySeparationLine();
     }
 
-    public int[] askPlayerRowAndColumnNumber() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please choose a row to play (number between 0 and 2)");
-        int row = scanner.nextInt();
-        System.out.println("Please choose a column to play (number between 0 and 2)");
-        int column = scanner.nextInt();
-        int[] playerMove = {row, column};
-        return playerMove;
-    }
-
     public void displayVictory() {
         System.out.println("You win!!! Yayyy !!");
     }
 
+    public PlayerInteraction getPlayer1Menu() {
+        return player1Interaction;
+    }
+
+    public PlayerInteraction getPlayer2Menu() {
+        return player2Interaction;
+    }
 }
