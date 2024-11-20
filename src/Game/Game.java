@@ -30,20 +30,22 @@ public class Game {
         int[] playerMove = menu.askPlayerRowAndColumnNumber();
         int row = playerMove[0];
         int col = playerMove[1];
-        if(board[row][col].isEmpty()) {
-            markCell(row, col, player);
-            menu.displayGameBoard(board);
-        } else if (isInBoardBounds(row) || isInBoardBounds(col)) {
+        if (!isInBoardBounds(row) || !isInBoardBounds(col)) {
             menu.displayWrongInput();
             playOneTurn(player);
         } else {
-            menu.displayNotAnEmptyCell();
-            playOneTurn(player);
+            if(board[row][col].isEmpty()) {
+                markCell(row, col, player);
+                menu.displayGameBoard(board);
+            } else {
+                menu.displayNotAnEmptyCell();
+                playOneTurn(player);
+            }
         }
     }
 
     public boolean isInBoardBounds(int position) {
-        return position < 0 || position >= size;
+        return position >= 0 && position < size;
     }
 
     private void markCell(int row, int col, Player player) {
