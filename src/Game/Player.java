@@ -1,10 +1,16 @@
 package Game;
 
 public class Player {
-    private final String crossMark = " X ";
+    public static final String X_MARK = " X ";
+    public static final String O_MARK = " O ";
 
-    public String getCrossMark() {
-        return crossMark;
+    private String playerMark;
+
+    public Player(String playerMark) {
+        this.playerMark = playerMark;
     }
 
+    public String getPlayerMark() {
+        return playerMark;
+    }
 }

@@ -1,15 +1,18 @@
 package Game;
 
 public class Game {
+
     private Menu menu;
     private Cell [][] board;
-    private Player player;
+    private Player playerX;
+    private Player playerO;
     private int size = 3;
     private int turn;
 
     public Game() {
         menu = new Menu();
-        player = new Player();
+        playerX = new Player(Player.X_MARK);
+        playerO = new Player(Player.O_MARK);
         board = new Cell[size][size];
         turn = 1;
     }
@@ -22,38 +25,54 @@ public class Game {
         }
     }
 
-    private void playOneTurn() {
+    private void playOneTurn(Player player) {
 //        menu.displayNewTurnBeginning(turn);
         int[] playerMove = menu.askPlayerRowAndColumnNumber();
         int row = playerMove[0];
         int col = playerMove[1];
         if(board[row][col].isEmpty()) {
-            markCell(row, col);
+            markCell(row, col, player);
             menu.displayGameBoard(board);
-        } else if (isOutOfBoard(row) || isOutOfBoard(col)) {
+        } else if (isInBoardBounds(row) || isInBoardBounds(col)) {
             menu.displayWrongInput();
-            playOneTurn();
+            playOneTurn(player);
         } else {
             menu.displayNotAnEmptyCell();
-            playOneTurn();
+            playOneTurn(player);
         }
     }
 
-    public boolean isOutOfBoard(int position) {
+    public boolean isInBoardBounds(int position) {
         return position < 0 || position >= size;
     }
 
-    private void markCell(int row, int col) {
-        String playerMark = player.getCrossMark();
+    private void markCell(int row, int col, Player player) {
+        String playerMark = player.getPlayerMark();
         board[row][col].setRepresentation(playerMark);
     }
 
-    public void playGame() {
+    public void playSoloGame() {
         initializeEmptyBoard();
         //gère le déroulement de l'ensemble du jeu
         startNewGame();
         while (!isGameOver()) {
-            playOneTurn();
+            playOneTurn(playerX);
+        }
+    }
+
+    public void play2PlayersGame() {
+        initializeEmptyBoard();
+        startNewGame();
+        int turn = 1;
+        Player player;
+        while (!isGameOver()) {
+            if (turn%2 == 0) {
+                player = playerO;
+            } else {
+                player = playerX;
+            }
+            playOneTurn(player);
+            turn ++;
         }
     }
 

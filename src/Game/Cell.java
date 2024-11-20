@@ -20,7 +20,7 @@ public class Cell {
     }
 
     public boolean isCrossMarked(Player player) {
-        return representation.equals(player.getCrossMark());
+        return representation.equals(player.getPlayerMark());
     }
 
     public boolean hasTheSameRepresentation(Cell cell) {
