@@ -1,4 +1,4 @@
-package Game;
+package Game.Tictactoe;
 
 public class Main {
     public static void main(String[] args) {

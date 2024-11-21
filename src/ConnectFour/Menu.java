@@ -1,6 +1,4 @@
-package Game;
-
-import java.util.Scanner;
+package ConnectFour;
 
 public class Menu {
 
@@ -15,7 +13,7 @@ public class Menu {
     }
 
     public void welcomeMenu() {
-        menuOut.writeLine("Welcome to TIC TAC TOE !");
+        menuOut.writeLine("Welcome to Connect 4 Game !");
     }
 
     private int askPlayerToStartGame() {
@@ -63,8 +61,12 @@ public class Menu {
         }
     }
 
-    public void displaySeparationLine() {
-        menuOut.writeLine("-------------");
+    public void displaySeparationLine(int totalOfColumns) {
+        menuOut.write("--------");
+        for (int i = 0; i < totalOfColumns; i++) {
+            menuOut.write("+---");
+        }
+        menuOut.write("+\n");
     }
 
     private void displayOneCell(Cell cell) {
@@ -74,14 +76,25 @@ public class Menu {
     }
 
     public void displayGameBoard( Cell[][] board ) {
-        for (int i = 0; i < board[0].length; i++) {
-            displaySeparationLine();
-            for (int j = 0; j < board[1].length; j++) {
+        int totalOfRows = board.length;
+        int totalOfColumns = board[0].length;
+
+        menuOut.write("column #|");
+        for (int col = 0; col < totalOfColumns; col++) {
+            menuOut.write(" " + (col + 1) + " |");
+        }
+        menuOut.write("\n");
+
+        for (int i = 0; i < totalOfRows; i++) {
+            displaySeparationLine(totalOfColumns);
+            int rowNumber = i + 1;
+            menuOut.write("row n°" + rowNumber + " ");
+            for (int j = 0; j < totalOfColumns; j++) {
                 displayOneCell(board[i][j]);
             }
             menuOut.writeLine("|");
         }
-        displaySeparationLine();
+        displaySeparationLine(totalOfColumns);
     }
 
     public void displayRowCompleted() {

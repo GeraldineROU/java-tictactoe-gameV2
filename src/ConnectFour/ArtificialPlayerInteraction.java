@@ -1,8 +1,6 @@
-package Game;
+package ConnectFour;
 
-import java.util.Scanner;
-
-public class ArtificialPlayerInteraction implements PlayerInteraction{
+public class ArtificialPlayerInteraction implements PlayerInteraction {
 
     private MenuOut menuOut;
 

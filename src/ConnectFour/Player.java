@@ -1,4 +1,4 @@
-package Game;
+package ConnectFour;
 
 public class Player {
     private State state;

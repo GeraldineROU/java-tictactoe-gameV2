@@ -1,4 +1,4 @@
-package Game;
+package Game.Tictactoe;
 
 public interface PlayerInteraction {
 

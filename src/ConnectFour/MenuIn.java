@@ -1,4 +1,4 @@
-package Game;
+package ConnectFour;
 
 import java.util.Scanner;
 
