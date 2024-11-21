@@ -1,16 +1,18 @@
 package Game;
 
 public class Player {
-    public static final String X_MARK = " X ";
-    public static final String O_MARK = " O ";
+    private State state;
 
-    private String playerMark;
-
-    public Player(String playerMark) {
-        this.playerMark = playerMark;
+    public Player(State state) {
+        this.state = state;
     }
 
-    public String getPlayerMark() {
-        return playerMark;
+    public State getState() {
+        return state;
+    }
+
+    @Override
+    public String toString() {
+        return state.getValue();
     }
 }

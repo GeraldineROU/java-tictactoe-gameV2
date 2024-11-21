@@ -2,23 +2,24 @@ package Game;
 
 public class Game {
 
+    private State state;
     private Menu menu;
-    private Cell [][] board;
+    private Cell[][] board;
     private Player playerX;
     private Player playerO;
     private int size = 3;
 
     public Game() {
         menu = new Menu();
-        playerX = new Player(Player.X_MARK);
-        playerO = new Player(Player.O_MARK);
+        playerX = new Player(State.X);
+        playerO = new Player(State.O);
         board = new Cell[size][size];
     }
 
     private void initializeEmptyBoard() {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-                board[row][col] = new Cell("   ");
+                board[row][col] = new Cell();
             }
         }
     }
@@ -26,17 +27,17 @@ public class Game {
     private void playOneTurn(Player player, int[] playerMove) {
         int row = playerMove[0];
         int col = playerMove[1];
-        markCell(row, col, player);
+        playerGetCell(row, col, player);
         menu.displayGameBoard(board);
     }
 
-    public boolean isInBoardBounds(int position) {
-        return position >= 0 && position < size;
+    public boolean isOutOfBoardBounds(int number) {
+        return number < 0 || number >= size;
     }
 
-    private void markCell(int row, int col, Player player) {
-        String playerMark = player.getPlayerMark();
-        board[row][col].setRepresentation(playerMark);
+    private void playerGetCell(int row, int col, Player player) {
+        State playerState = player.getState();
+        board[row][col].setState(playerState);
     }
 
     public void playGame() {
@@ -45,9 +46,9 @@ public class Game {
         int turn = 1;
         Player player;
 
-        while (turn <= size*size) {
+        while (turn <= size * size) {
             int[] choice;
-            if (turn%2 == 0) {
+            if (turn % 2 == 0) {
                 player = playerO;
                 choice = menu.getPlayer2Menu().askPlayerRowAndColumnNumber();
             } else {
@@ -58,17 +59,17 @@ public class Game {
             int row = choice[0];
             int col = choice[1];
 
-            if (!isInBoardBounds(row) || !isInBoardBounds(col)) {
+            if (isOutOfBoardBounds(row) || isOutOfBoardBounds(col)) {
                 menu.displayWrongInput();
-            } if (!board[row][col].isEmpty()) {
+            } else if (board[row][col].isPlayed()) {
                 menu.displayNotAnEmptyCell();
             } else {
                 playOneTurn(player, choice);
                 checkIfIsGameOver(player);
-                turn ++;
+                turn++;
             }
         }
-        if (turn > 9){
+        if (turn > 9) {
             menu.displayNoWinner();
         }
     }
@@ -79,30 +80,34 @@ public class Game {
 
     }
 
+    private boolean cellsHaveSameState(Cell cell1, Cell cell2) {
+        return cell1.getState() == cell2.getState();
+    }
+
     private String checkWhoWins(Player player) {
         String winner;
         for (int row = 0; row < size; row++) {
-            if(!board[row][0].isEmpty() && board[row][0].hasTheSameRepresentation(board[row][1]) && board[row][1].hasTheSameRepresentation(board[row][2])) {
+            if (board[row][0].isPlayed() && cellsHaveSameState(board[row][0], board[row][1]) && cellsHaveSameState(board[row][1], board[row][2])) {
                 menu.displayRowCompleted();
-                winner = player.getPlayerMark();
+                winner = player.toString();
                 return winner;
             }
         }
         for (int col = 0; col < size; col++) {
-            if(!board[0][col].isEmpty() && board[0][col].hasTheSameRepresentation(board[1][col]) && board[1][col].hasTheSameRepresentation(board[2][col])) {
+            if (board[0][col].isPlayed() && cellsHaveSameState(board[0][col], board[1][col]) && cellsHaveSameState(board[1][col], board[2][col])) {
                 menu.displayColumnCompleted();
-                winner = player.getPlayerMark();
+                winner = player.toString();
                 return winner;
             }
         }
-        if(!board[0][0].isEmpty() && board[0][0].hasTheSameRepresentation(board[1][1]) && board[1][1].hasTheSameRepresentation(board[2][2])) {
+        if (board[0][0].isPlayed() && cellsHaveSameState(board[0][0], board[1][1]) && cellsHaveSameState(board[1][1], board[2][2])) {
             menu.displayDiagonalCompleted();
-            winner = player.getPlayerMark();
+            winner = player.toString();
             return winner;
         }
-        if (!board[2][0].isEmpty() && board[2][0].hasTheSameRepresentation(board[1][1]) && board[1][1].hasTheSameRepresentation(board[0][2])) {
+        if (board[2][0].isPlayed() && cellsHaveSameState(board[2][0], board[1][1]) && cellsHaveSameState(board[1][1], board[0][2])) {
             menu.displayDiagonalCompleted();
-            winner = player.getPlayerMark();
+            winner = player.toString();
             return winner;
         }
         winner = null;
@@ -117,5 +122,7 @@ public class Game {
             System.exit(0);
         }
     }
+
+    //just to try modify a file....
 
 }

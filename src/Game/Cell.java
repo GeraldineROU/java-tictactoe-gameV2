@@ -1,30 +1,26 @@
 package Game;
 
 public class Cell {
-    private String representation;
+    private State state;
 
-    public Cell(String content) {
-        this.representation = content;
+    public Cell() {
+        state = State.EMPTY;
     }
 
     public String getRepresentation() {
-        return representation;
+        return state.getValue();
     }
 
-    public void setRepresentation(String representation) {
-        this.representation = representation;
+    public State getState() {
+        return state;
     }
 
-    public boolean isEmpty() {
-        return representation.equals("   ");
+    public void setState(State state) {
+        this.state = state;
     }
 
-    public boolean isCrossMarked(Player player) {
-        return representation.equals(player.getPlayerMark());
-    }
-
-    public boolean hasTheSameRepresentation(Cell cell) {
-        return representation.equals(cell.getRepresentation());
+    public boolean isPlayed() {
+        return state != State.EMPTY;
     }
 
 }
