@@ -23,4 +23,8 @@ public class Cell {
         return state != State.EMPTY;
     }
 
+    public boolean isEmpty() {
+        return state == State.EMPTY;
+    }
+
 }

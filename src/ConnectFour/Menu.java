@@ -4,6 +4,7 @@ public class Menu {
 
     private PlayerInteraction player1Interaction;
     private PlayerInteraction player2Interaction;
+    private PlayerInteraction playerInteraction;
     private MenuIn menuIn;
     private MenuOut menuOut;
 
@@ -115,6 +116,14 @@ public class Menu {
 
     public void displayNoWinner() {
         menuOut.writeLine("Board full, no winner.");
+    }
+
+    public void displayColumnFull(int column) {
+        menuOut.writeLine("Column " + column + " full. Please choose another one :");
+    }
+
+    public PlayerInteraction getPlayerInteraction() {
+        return playerInteraction;
     }
 
     public PlayerInteraction getPlayer1Menu() {

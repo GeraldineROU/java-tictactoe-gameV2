@@ -9,12 +9,10 @@ public class ArtificialPlayerInteraction implements PlayerInteraction {
     }
 
     @Override
-    public int[] askPlayerRowAndColumnNumber() {
-        int row = (int)(Math.random()*3);
-        menuOut.writeLine("Artificial player chose to play row number " + row + " !");
+    public int askPlayerColumnNumber() {
+
         int column = (int)(Math.random()*3);
         menuOut.writeLine("Artificial player chose to play column number " + column + " !");
-        int[] playerMove = {row, column};
-        return playerMove;
+        return column;
     }
 }
