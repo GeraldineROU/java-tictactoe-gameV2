@@ -2,7 +2,6 @@ package Game.Tictactoe;
 
 public class Game {
 
-    private State state;
     private Menu menu;
     private Cell[][] board;
     private Player playerX;
@@ -123,6 +122,5 @@ public class Game {
         }
     }
 
-    //just to try modify a file....
 
 }
