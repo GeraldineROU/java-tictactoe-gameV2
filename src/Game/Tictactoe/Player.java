@@ -1,6 +1,6 @@
 package Game.Tictactoe;
 
-public class Player {
+public class  Player {
     private State state;
 
     public Player(State state) {

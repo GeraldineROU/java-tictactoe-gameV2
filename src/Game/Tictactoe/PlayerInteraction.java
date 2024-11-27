@@ -2,5 +2,5 @@ package Game.Tictactoe;
 
 public interface PlayerInteraction {
 
-    public int[] askPlayerRowAndColumnNumber();
+    public int[] chosesNextMove();
 }

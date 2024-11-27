@@ -2,7 +2,7 @@ package Game.Tictactoe;
 
 public class Main {
     public static void main(String[] args) {
-        Game game = new Game();
+        GameMaster game = new GameMaster();
 //
         game.playGame();
     }

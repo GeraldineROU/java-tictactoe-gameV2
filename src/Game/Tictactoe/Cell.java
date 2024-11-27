@@ -23,4 +23,7 @@ public class Cell {
         return state != State.EMPTY;
     }
 
+    public boolean hasSameState(Cell anotherCell) {
+        return this.getState() == anotherCell.getState();
+    }
 }

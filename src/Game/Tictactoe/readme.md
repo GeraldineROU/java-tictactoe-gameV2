@@ -72,15 +72,16 @@ namespace Model {
         + setState(state : State)
         + isPlayed() boolean
         + hasSameState(cell1 : Cell, cell2 : Cell) boolean
-        + isOutOfBoardBounds(board : Board) boolean
     }
 
     class Board :::model {
         - size : int
         - board : Cell[][]
+        - gameRules : GameRules
         + initBoard()
         + setSize(size : int)
         + getSize() int
+        + isOutOfBoardBounds(board : Cell[][]) boolean
     }
 
     class State :::model {
@@ -108,7 +109,7 @@ namespace Model {
 Cell "1..N" -- "1" State
 Board "1" -- "1..N" Cell
 GameRules "1" -- "1..N" Player
-GameRules "1" -- "1" Board
+GameRules "1..N" -- "1" Board
 
 
 namespace Controller {

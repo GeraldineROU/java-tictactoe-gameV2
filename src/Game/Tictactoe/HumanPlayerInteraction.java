@@ -11,10 +11,10 @@ public class HumanPlayerInteraction implements PlayerInteraction{
     }
 
     @Override
-    public int[] askPlayerRowAndColumnNumber() {
-        menuOut.writeLine("Please choose a row to play (number between 0 and 2)");
+    public int[] chosesNextMove() {
+        menuOut.askRow();
         int row = menuIn.getUserInt();
-        menuOut.writeLine("Please choose a column to play (number between 0 and 2)");
+        menuOut.askColumn();
         int column = menuIn.getUserInt();
         int[] playerMove = {row, column};
         return playerMove;
