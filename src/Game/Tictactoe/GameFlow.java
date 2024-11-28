@@ -1,6 +1,6 @@
 package Game.Tictactoe;
 
-public class GameFlow extends GameMaster{
+public class GameFlow {
 
     public void playsOneTurn(Player player, int[] playerMove) {
         int row = playerMove[0];
@@ -14,8 +14,10 @@ public class GameFlow extends GameMaster{
         board[row][col].setState(playerState);
     }
 
-    private String checksWhoWins(Player player) {
+    protected String checksWhoWins(Player player) {
         String winner = null;
         return winner;
     }
+
+
 }

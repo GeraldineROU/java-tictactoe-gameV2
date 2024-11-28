@@ -24,6 +24,10 @@ public class MenuOut {
         System.out.print(number);
     }
 
+    private void displayStringOnSameLine (String text) {
+        System.out.print(text);
+    }
+
     public void rowCompleted() {
         displayMessage(Messages.ROW);
     }
@@ -52,6 +56,12 @@ public class MenuOut {
     public void cpuCol(int col) {
         displayMessage(Messages.CPU_COL);
         displayIntOnSameLine(col);
+    }
+
+    public void victory(Player player) {
+        displayMessage(Messages.VICTORY);
+        displayStringOnSameLine(player.toString());
+        displayStringOnSameLine(Messages.YOU_WIN);
     }
 
 
