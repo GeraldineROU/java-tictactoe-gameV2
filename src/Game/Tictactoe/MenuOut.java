@@ -20,13 +20,14 @@ public class MenuOut {
         System.out.println(message);
     }
 
-    private void displayIntOnSameLine (int number) {
-        System.out.print(number);
+    private void displayMessageFollowedBy (String message) {
+        System.out.print(message);
     }
 
-    private void displayStringOnSameLine (String text) {
-        System.out.print(text);
+    private void displayInt(int number) {
+        System.out.println(number);
     }
+
 
     public void rowCompleted() {
         displayMessage(Messages.ROW);
@@ -49,19 +50,19 @@ public class MenuOut {
     }
 
     public void cpuRow(int row) {
-        displayMessage(Messages.CPU_ROW);
-        displayIntOnSameLine(row);
+        displayMessageFollowedBy(Messages.CPU_ROW);
+        displayInt(row);
     }
 
     public void cpuCol(int col) {
-        displayMessage(Messages.CPU_COL);
-        displayIntOnSameLine(col);
+        displayMessageFollowedBy(Messages.CPU_COL);
+        displayInt(col);
     }
 
     public void victory(Player player) {
         displayMessage(Messages.VICTORY);
-        displayStringOnSameLine(player.toString());
-        displayStringOnSameLine(Messages.YOU_WIN);
+        displayMessageFollowedBy(player.toString());
+        displayMessage(Messages.YOU_WIN);
     }
 
     public void wrongInput() {

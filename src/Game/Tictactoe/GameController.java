@@ -40,9 +40,17 @@ public class GameController {
         return player2Interaction;
     }
 
-//   public int [] getArtificialPlayerMove () {
-//
-//   }
+   public int [] getArtificialPlayerMove () {
+       int row = (int)(Math.random()*3);
+        menuOut.cpuRow(row);
+
+       int column = (int)(Math.random()*3);
+        menuOut.cpuCol(column);
+
+       System.out.println("row: " + row + ", column: " + column);
+
+       return new int[]{row, column};
+   }
 
    public int getPlayerInt(Scanner scanner) {
        int number = -1;
