@@ -16,16 +16,16 @@ public class GameController {
     private PlayerInteraction player2Interaction;
 
     public GameController() {
-        gameRules = new GameRules();
+//        gameRules = new GameRules();
         menuOut = new MenuOut();
         menuIn = new MenuIn();
-        playerX = new Player(State.X);
-        playerO = new Player(State.O);
-        board = new Cell[gameRules.getBoardSize()][gameRules.getBoardSize()];
-        board = boardGame.initBoard();
-        playerInteraction = getPlayerInteraction();
-        player1Interaction = getPlayer1Interaction();
-        player2Interaction = getPlayer2Interaction();
+//        playerX = new Player(State.X);
+//        playerO = new Player(State.O);
+//        board = new Cell[gameRules.getBoardSize()][gameRules.getBoardSize()];
+//        board = boardGame.initBoard();
+//        playerInteraction = getPlayerInteraction();
+//        player1Interaction = getPlayer1Interaction();
+//        player2Interaction = getPlayer2Interaction();
     }
 
     public PlayerInteraction getPlayerInteraction() {
@@ -40,44 +40,44 @@ public class GameController {
         return player2Interaction;
     }
 
-   public int [] getArtificialPlayerMove () {
+//   public int [] getArtificialPlayerMove () {
+//
+//   }
 
+   public int getPlayerInt(Scanner scanner) {
+       int number = -1;
+       while (true) {
+           if (scanner.hasNextInt()) {
+               number = scanner.nextInt();
+               break;
+           } else {
+               menuOut.wrongInput();
+               menuOut.askInt();
+               scanner.next();
+           }
+       }
+       return number;
    }
 
    public int [] getHumanPlayerMove () {
        Scanner scanner = new Scanner(System.in);
-       int row = -1;
-       int col = -1;
 
-        //menu demande au joueur quoi jouer
        menuOut.askRow();
-
-       while (true) {
-           if (scanner.hasNextInt()) {
-               row = scanner.nextInt();
-               break;
-           } else {
-               menuOut.wrongInput();
-               scanner.next();
-           }
-       }
-
-       int row  = menuIn.getUserInt(scanner);
+       int row = getPlayerInt(scanner);
 
        menuOut.askColumn();
-       int column = menuIn.getUserInt();
+       int column = getPlayerInt(scanner);
 
+       System.out.println("row: " + row + ", column: " + column);
 
-       //vérifie le choix du joueur (int uniquement)
-
-       //retourne le coup
+       return new int [] {row, column};
    }
 
-   public boolean gameRulesCheck (int[] playerMove) {
-        //verifie les conditions pour jouer
-       // case déjà jouée?
-       // case en dehors du tableau?
-   }
+//   public boolean gameRulesCheck (int[] playerMove) {
+//        //verifie les conditions pour jouer
+//       // case déjà jouée?
+//       // case en dehors du tableau?
+//   }
 
 
 

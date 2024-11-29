@@ -17,5 +17,6 @@ public class Messages {
     public static final String CPU_ROW = "Artificial player chose to play row number ";
     public static final String CPU_COL = "Artificial player chose to play column number ";
     public static final String ERR = "Wrong input";
+    public static final String INT = "Please enter a number between 0 and 2";
 
 }

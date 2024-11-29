@@ -68,6 +68,10 @@ public class MenuOut {
         displayMessage(Messages.ERR);
     }
 
+    public void askInt() {
+        displayMessage(Messages.INT);
+    }
+
 
 
 }
