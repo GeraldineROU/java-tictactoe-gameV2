@@ -1,38 +1,114 @@
 package Game.Tictactoe;
 
-public class GameMaster {
+import java.util.Scanner;
+
+public class GameController {
 
     private GameRules gameRules;
-    private GameFlow gameFlow;
     private MenuOut menuOut;
+    private MenuIn menuIn;
     private Cell[][] board;
     private Player playerX;
     private Player playerO;
     private Board boardGame;
+    private PlayerInteraction playerInteraction;
+    private PlayerInteraction player1Interaction;
+    private PlayerInteraction player2Interaction;
 
-    public GameMaster() {
+    public GameController() {
         gameRules = new GameRules();
-        gameFlow = new GameFlow();
         menuOut = new MenuOut();
+        menuIn = new MenuIn();
         playerX = new Player(State.X);
         playerO = new Player(State.O);
         board = new Cell[gameRules.getBoardSize()][gameRules.getBoardSize()];
         board = boardGame.initBoard();
+        playerInteraction = getPlayerInteraction();
+        player1Interaction = getPlayer1Interaction();
+        player2Interaction = getPlayer2Interaction();
     }
 
-
-
-    private void checkIfIsGameOver(Player player) {
-        String winner = gameFlow.checksWhoWins(player);
-        if (winner != null) {
-            menuOut.victory(player);
-            System.exit(0);
-        }
+    public PlayerInteraction getPlayerInteraction() {
+        return playerInteraction;
     }
 
-    public void startGame() {
-
+    public PlayerInteraction getPlayer1Interaction() {
+        return player1Interaction;
     }
+
+    public PlayerInteraction getPlayer2Interaction() {
+        return player2Interaction;
+    }
+
+   public int [] getArtificialPlayerMove () {
+
+   }
+
+   public int [] getHumanPlayerMove () {
+       Scanner scanner = new Scanner(System.in);
+       int row = -1;
+       int col = -1;
+
+        //menu demande au joueur quoi jouer
+       menuOut.askRow();
+
+       while (true) {
+           if (scanner.hasNextInt()) {
+               row = scanner.nextInt();
+               break;
+           } else {
+               menuOut.wrongInput();
+               scanner.next();
+           }
+       }
+
+       int row  = menuIn.getUserInt(scanner);
+
+       menuOut.askColumn();
+       int column = menuIn.getUserInt();
+
+
+       //vérifie le choix du joueur (int uniquement)
+
+       //retourne le coup
+   }
+
+   public boolean gameRulesCheck (int[] playerMove) {
+        //verifie les conditions pour jouer
+       // case déjà jouée?
+       // case en dehors du tableau?
+   }
+
+
+
+    public void playerMoveUpdatesBoard(Player player, int[] playerMove) {
+        int row = playerMove[0];
+        int col = playerMove[1];
+        playerGetsCell(row, col, player);
+        menuOut.displayGameBoard(boardGame);
+    }
+
+    private void playerGetsCell(int row, int col, Player player) {
+        State playerState = player.getState();
+        board[row][col].setState(playerState);
+    }
+//
+//    protected String checksWhoWins(Player player) {
+//        String winner = null;
+//        return winner;
+//    }
+
+//    private void checkIfIsGameOver(Player player) {
+//        String winner = gameFlow.checksWhoWins(player);
+//        if (winner != null) {
+//            menuOut.victory(player);
+//            System.exit(0);
+//        }
+//    }
+//
+//    public void startGame() {
+//
+//    }
 
 
 

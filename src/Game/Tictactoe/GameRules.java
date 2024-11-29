@@ -1,6 +1,6 @@
 package Game.Tictactoe;
 
-public class GameRules extends GameMaster {
+public class GameRules extends GameController {
 
     public static final int SIZE = 3;
 

@@ -64,6 +64,10 @@ public class MenuOut {
         displayStringOnSameLine(Messages.YOU_WIN);
     }
 
+    public void wrongInput() {
+        displayMessage(Messages.ERR);
+    }
+
 
 
 }

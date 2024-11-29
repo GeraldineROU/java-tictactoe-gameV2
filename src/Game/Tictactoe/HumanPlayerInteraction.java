@@ -2,8 +2,8 @@ package Game.Tictactoe;
 
 public class HumanPlayerInteraction implements PlayerInteraction{
 
-    private MenuIn menuIn;
-    private MenuOut menuOut;
+//    private MenuIn menuIn;
+//    private MenuOut menuOut;
 
     public HumanPlayerInteraction() {
         menuIn = new MenuIn();

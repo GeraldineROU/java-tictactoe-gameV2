@@ -102,11 +102,11 @@ public class Menu {
         menuOut.writeLine("Board full, no winner.");
     }
 
-    public PlayerInteraction getPlayer1Menu() {
-        return player1Interaction;
-    }
-
-    public PlayerInteraction getPlayer2Menu() {
-        return player2Interaction;
-    }
+//    public PlayerInteraction getPlayer1Menu() {
+//        return player1Interaction;
+//    }
+//
+//    public PlayerInteraction getPlayer2Menu() {
+//        return player2Interaction;
+//    }
 }
