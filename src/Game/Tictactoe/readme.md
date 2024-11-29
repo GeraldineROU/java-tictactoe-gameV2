@@ -5,16 +5,8 @@
 ```mermaid
 classDiagram
 
-note for Message "Contains the list of all the massages to be displayed"
-
 namespace View {
     
-    class Message :::view {
-        <<Enumeration>>
-        + getValue() String
-    }
-
-
     class MenuIn :::view {
         - player1Interaction : PlayerInteraction
         - player2Interaction : PlayerInteraction
@@ -36,34 +28,27 @@ namespace View {
         + noVictory()
 
     }
-
-    class PlayerInteraction :::view {
-        <<Interface>>
-        + chosesNextMove() int[]
-    }
-
-    class ArtificialPlayerInteraction :::view {
-        - menuOut : MenuOut
-        + chosesNextMove() int[]
-    }
-
-    class HumanPlayerInteraction :::view {
-        - menuIn : MenuIn
-        - menuOut : MenuOut
-        + chosesNextMove() int[]
-        
-    }
     
 }
 
 PlayerInteraction <|-- ArtificialPlayerInteraction : implements
 PlayerInteraction <|-- HumanPlayerInteraction : implements
-HumanPlayerInteraction "1..N" -- "1" MenuIn
-ArtificialPlayerInteraction "1..N" -- "1" MenuOut
-HumanPlayerInteraction "1..N" -- "1" MenuOut
-MenuOut "1" -- "1" Message
+HumanPlayerInteraction "1..N" -- "1" GameController
+ArtificialPlayerInteraction "1..N" -- "1" GameController
+
+GameController "1" -- "1" Message
 
 namespace Model {
+
+    class Message :::view {
+        +++ constantes contenant le texte
+    }
+
+    class Player :::model {
+        - state : State
+        + getState() State
+        + toString() String
+    }
 
     class Cell :::model {
         -state : State
@@ -104,6 +89,23 @@ namespace Model {
         + isALineCompleted() boolean
     }
 
+    class PlayerInteraction :::view {
+        <<Interface>>
+        + chosesNextMove() int[]
+    }
+
+    class ArtificialPlayerInteraction :::view {
+        - menuOut : MenuOut
+        + chosesNextMove() int[]
+    }
+
+    class HumanPlayerInteraction :::view {
+        - menuIn : MenuIn
+        - menuOut : MenuOut
+        + chosesNextMove() int[]
+
+    }
+
 }
 
 Cell "1..N" -- "1" State
@@ -114,13 +116,9 @@ GameRules "1..N" -- "1" Board
 
 namespace Controller {
 
-    class Player :::controller {
-        - state : State
-        + getState() State
-        + toString() String
-    }
+    
 
-    class GameMaster :::controller {
+    class GameController :::controller {
         - gameRules : GameRules
         - menuIn : MenuIn
         - menuOut : MenuOut
@@ -131,23 +129,14 @@ namespace Controller {
         - startsNewGame()
         - checksIfGameIsOver(player : Player)
     }
-
-    class GameFlow :::controller {
-        - playsOneTurn(player : Player, int[] : playerMove)
-        - playerGetsCell(row : int, column : int, player : Player)
-        - checksWhoWins(player : Player) String
-    }
     
 }
 
 Player -- State
-GameMaster "1" -- "1" GameRules
-GameMaster "1" -- "1" MenuIn
-GameMaster "1" -- "1" MenuOut
-GameMaster "1" -- "1..N" Player
-
-GameMaster <|-- GameFlow : Inheritance
-
+GameController "1" -- "1" GameRules
+GameController "1" -- "1" MenuIn
+GameController "1" -- "1" MenuOut
+GameController "1" -- "1..N" Player
 
 end
 
