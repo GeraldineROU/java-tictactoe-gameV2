@@ -12,7 +12,7 @@ public class MenuOut {
 
 
 
-    public void displayGameBoard(Board board) {
+    public void displayGameBoard() {
         System.out.println("gameboard");
     }
 

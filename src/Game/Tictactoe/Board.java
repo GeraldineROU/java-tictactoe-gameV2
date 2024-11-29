@@ -1,22 +1,17 @@
 package Game.Tictactoe;
 
-public class Board {
+public class BoardGame {
 
-    private Cell[][] boardGame;
+
     private GameRules gameRules;
     private int size;
 
-//    public Board() {
-//        this.gameRules = new GameRules();
-//        this.size = GameRules.SIZE;
-//        this.board = new Cell[size][size];
-//        board = initBoard();
-//    }
-
-    public Board() {
+    public BoardGame() {
         this.gameRules = new GameRules();
-        this.size = gameRules.getBoardSize();
+        this.size = GameRules.SIZE;
+        boardGame = initBoard();
     }
+
 
     public Cell[][] initBoard() {
         for (int row = 0; row < size; row++) {

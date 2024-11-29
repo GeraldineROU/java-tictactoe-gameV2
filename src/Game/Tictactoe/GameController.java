@@ -7,10 +7,9 @@ public class GameController {
     private GameRules gameRules;
     private MenuOut menuOut;
     private MenuIn menuIn;
-    private Cell[][] board;
+    private Cell[][] boardGame;
     private Player playerX;
     private Player playerO;
-    private Board boardGame;
     private PlayerInteraction playerInteraction;
     private PlayerInteraction player1Interaction;
     private PlayerInteraction player2Interaction;
@@ -19,6 +18,8 @@ public class GameController {
 //        gameRules = new GameRules();
         menuOut = new MenuOut();
         menuIn = new MenuIn();
+        boardGame = new Cell[3][3];
+        boardGame = initBoard(3);
 //        playerX = new Player(State.X);
 //        playerO = new Player(State.O);
 //        board = new Cell[gameRules.getBoardSize()][gameRules.getBoardSize()];
@@ -28,16 +29,13 @@ public class GameController {
 //        player2Interaction = getPlayer2Interaction();
     }
 
-    public PlayerInteraction getPlayerInteraction() {
-        return playerInteraction;
-    }
-
-    public PlayerInteraction getPlayer1Interaction() {
-        return player1Interaction;
-    }
-
-    public PlayerInteraction getPlayer2Interaction() {
-        return player2Interaction;
+    public Cell[][] initBoard(int size) {
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                boardGame[row][col] = new Cell();
+            }
+        }
+        return boardGame;
     }
 
    public int [] getArtificialPlayerMove () {
