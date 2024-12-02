@@ -1,4 +1,4 @@
-package Game.Tictactoe;
+package Game.Tictactoe.Views;
 
 public class Messages {
 

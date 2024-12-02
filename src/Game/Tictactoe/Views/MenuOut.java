@@ -1,4 +1,6 @@
-package Game.Tictactoe;
+package Game.Tictactoe.Views;
+
+import Game.Tictactoe.Models.Player;
 
 public class MenuOut {
 
@@ -26,6 +28,26 @@ public class MenuOut {
 
     private void displayInt(int number) {
         System.out.println(number);
+    }
+
+    public void horizontalUpperLineBeforeColumns() {
+        System.out.print("--------");
+    }
+
+    public void horizontalUpperLineOfOneCell() {
+        System.out.print("+---");
+    }
+
+    public void endOfLine() {
+        System.out.println("+");
+    }
+
+    public void oneCell(String cellContent) {
+        System.out.print("|" + cellContent);
+    }
+
+    public void endOfOneRow() {
+        System.out.println("|");
     }
 
 

@@ -1,4 +1,6 @@
-package Game.Tictactoe;
+package Game.Tictactoe.Models;
+
+import Game.Tictactoe.State;
 
 public class Cell {
     private State state;

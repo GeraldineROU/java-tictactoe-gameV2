@@ -1,16 +1,14 @@
 package Game.Tictactoe;
 
+import Game.Tictactoe.Controller.GameController;
+
 public class Main {
     public static void main(String[] args) {
         GameController game = new GameController();
 
-        System.out.println("test choix joueur humain");
+        game.playGame();
 
-        game.getHumanPlayerMove();
 
-        System.out.println("test choix joueur machine");
-
-        game.getArtificialPlayerMove();
 //
 //        game.playGame();
     }

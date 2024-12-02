@@ -1,4 +1,11 @@
-package Game.Tictactoe;
+package Game.Tictactoe.Controller;
+
+import Game.Tictactoe.*;
+import Game.Tictactoe.Models.Cell;
+import Game.Tictactoe.Models.GameRules;
+import Game.Tictactoe.Models.Player;
+import Game.Tictactoe.Views.MenuIn;
+import Game.Tictactoe.Views.MenuOut;
 
 import java.util.Scanner;
 
@@ -6,27 +13,17 @@ public class GameController {
 
     private GameRules gameRules;
     private MenuOut menuOut;
-    private MenuIn menuIn;
     private Cell[][] boardGame;
-    private Player playerX;
-    private Player playerO;
-    private PlayerInteraction playerInteraction;
-    private PlayerInteraction player1Interaction;
-    private PlayerInteraction player2Interaction;
+    public Player playerX;
+    public Player playerO;
 
     public GameController() {
-//        gameRules = new GameRules();
+        gameRules = new GameRules();
         menuOut = new MenuOut();
-        menuIn = new MenuIn();
         boardGame = new Cell[3][3];
         boardGame = initBoard(3);
-//        playerX = new Player(State.X);
-//        playerO = new Player(State.O);
-//        board = new Cell[gameRules.getBoardSize()][gameRules.getBoardSize()];
-//        board = boardGame.initBoard();
-//        playerInteraction = getPlayerInteraction();
-//        player1Interaction = getPlayer1Interaction();
-//        player2Interaction = getPlayer2Interaction();
+        playerX = new Player(State.X);
+        playerO = new Player(State.O);
     }
 
     public Cell[][] initBoard(int size) {
@@ -44,6 +41,7 @@ public class GameController {
 
        int column = (int)(Math.random()*3);
         menuOut.cpuCol(column);
+
 
        System.out.println("row: " + row + ", column: " + column);
 
@@ -76,28 +74,56 @@ public class GameController {
 
        System.out.println("row: " + row + ", column: " + column);
 
-       return new int [] {row, column};
+       int[] playerMove = {row, column};
+
+       if(!canPlayThisCell(playerMove)) {
+           menuOut.wrongInput();
+           getHumanPlayerMove();
+       }
+       return playerMove;
    }
-
-//   public boolean gameRulesCheck (int[] playerMove) {
-//        //verifie les conditions pour jouer
-//       // case déjà jouée?
-//       // case en dehors du tableau?
-//   }
-
-
 
     public void playerMoveUpdatesBoard(Player player, int[] playerMove) {
         int row = playerMove[0];
         int col = playerMove[1];
         playerGetsCell(row, col, player);
-        menuOut.displayGameBoard(boardGame);
+        boardRepresentation();
     }
 
     private void playerGetsCell(int row, int col, Player player) {
         State playerState = player.getState();
-        board[row][col].setState(playerState);
+        boardGame[row][col].setState(playerState);
     }
+
+    public void boardRepresentation() {
+        int totalOfRows = boardGame.length;
+        int totalOfCols = boardGame[0].length;
+
+
+        for (int row = 0; row < totalOfRows; row++) {
+            displayHorizontalSeparationForBoard(totalOfCols);
+            for (int col = 0; col < totalOfCols; col++) {
+                displayCellRepresentation(boardGame[row][col]);
+            }
+            menuOut.endOfOneRow();
+        }
+        displayHorizontalSeparationForBoard(totalOfCols);
+    }
+
+    private void displayCellRepresentation(Cell cell) {
+        String cellContent = cell.getRepresentation();
+        menuOut.oneCell(cellContent);
+    }
+
+    private void displayHorizontalSeparationForBoard(int totalOfColumns) {
+
+        for (int i = 0; i < totalOfColumns; i++) {
+            menuOut.horizontalUpperLineOfOneCell();
+        }
+        menuOut.endOfLine();
+    }
+
+
 //
 //    protected String checksWhoWins(Player player) {
 //        String winner = null;
@@ -116,41 +142,60 @@ public class GameController {
 //
 //    }
 
+    private boolean canPlayThisCell(int[] playerMove) {
+        int row = playerMove[0];
+        int col = playerMove[1];
+        if(boardGame[row][col].isPlayed()) {
+            menuOut.wrongInput();
+            return false;
+        } else if( row < 0 || col < 0 || row >= gameRules.SIZE || col >= gameRules.SIZE) {
+            menuOut.wrongInput();
+            return false;
+        } else {
+            return true;
+        }
+    }
 
 
-//    public void playGame() {
+    public void playGame() {
 //        initializeEmptyBoard();
 //        startNewGame();
-//        int turn = 1;
-//        Player player;
-//
-//        while (turn <= size * size) {
-//            int[] choice;
-//            if (turn % 2 == 0) {
-//                player = playerO;
-//                choice = menu.getPlayer2Menu().askPlayerRowAndColumnNumber();
-//            } else {
-//                player = playerX;
-//                choice = menu.getPlayer1Menu().askPlayerRowAndColumnNumber();
-//            }
-//
-//            int row = choice[0];
-//            int col = choice[1];
-//
+        boardRepresentation();
+
+        int turn = 1;
+        int size = gameRules.SIZE;
+        Player currentPlayer;
+
+        while (turn < size * size || gameRules.isALineCompleted(boardGame, menuOut)) {
+            int[] currentPlayerMove;
+            if (turn % 2 == 0) {
+                currentPlayerMove = getArtificialPlayerMove();
+                playerMoveUpdatesBoard(playerO, currentPlayerMove);
+
+            } else {
+                currentPlayerMove = getHumanPlayerMove();
+                playerMoveUpdatesBoard(playerX, currentPlayerMove);
+            }
+            turn ++;
+
+
+//            int row = currentPlayerMove[0];
+//            int col = currentPlayerMove[1];
+
+
+
 //            if (isOutOfBoardBounds(row) || isOutOfBoardBounds(col)) {
 //                menu.displayWrongInput();
 //            } else if (board[row][col].isPlayed()) {
 //                menu.displayNotAnEmptyCell();
 //            } else {
-//                playOneTurn(player, choice);
+//                playOneTurn(player, currentPlayerMove);
 //                checkIfIsGameOver(player);
 //                turn++;
 //            }
-//        }
-//        if (turn > 9) {
-//            menu.displayNoWinner();
-//        }
-//    }
+        }
+        System.out.println("Game over");
+    }
 //
 //    private void startNewGame() {
 //        menu.welcomeMenu();
